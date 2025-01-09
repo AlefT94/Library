@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+
+  librarydb:
+    image: mcr.microsoft.com/mssql/server
+
+  library.api:
+    image: ${DOCKER_REGISTRY-}libraryapi
+    build:
+      context: .
+      dockerfile: Library.API/Dockerfile
+
+volumes:
+   sqlserver_library:    
