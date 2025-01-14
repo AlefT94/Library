@@ -1,8 +1,4 @@
-﻿using Library.Core.Models;
-using Library.Core.Repositories;
-using MediatR;
-
-namespace Library.Application.Books.Commands.CreateBook;
+﻿namespace Library.Application.Books.Commands.CreateBook;
 public class CreateBookHandler(IBookRepository repository) : IRequestHandler<CreateBookCommand, int>
 {
     public async Task<int> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -13,6 +9,7 @@ public class CreateBookHandler(IBookRepository repository) : IRequestHandler<Cre
             Author = request.Author,
             ISBN = request.Isbn,
             PublishedYear = request.PublishedYear,
+            IsAvaliable = true
         };
 
         await repository.CreateAsync(newBook);

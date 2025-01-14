@@ -31,6 +31,7 @@ public class BookRepository(LibraryDbContext dbContext) : IBookRepository
     {
         var bookList = await dbContext
                         .Books
+                        .Where(b  => !b.IsDeleted)
                         .AsNoTracking()
                         .ToListAsync();
 
@@ -39,7 +40,9 @@ public class BookRepository(LibraryDbContext dbContext) : IBookRepository
 
     public async Task<Book>? GetByIdAsync(int id)
     {
-        var book = await dbContext.Books.FindAsync(id);
+        var book = await dbContext
+            .Books.Where(b => b.Id == id && !b.IsDeleted)
+            .FirstOrDefaultAsync();
         return book;
     }
 }
