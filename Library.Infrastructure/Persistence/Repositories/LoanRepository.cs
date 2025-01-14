@@ -2,15 +2,45 @@
 using Library.Core.Repositories;
 
 namespace Library.Infrastructure.Persistence.Repositories;
-public class LoanRepository : ILoanRepository
+public class LoanRepository(LibraryDbContext dbContext) : ILoanRepository
 {
-    public Task<Loan> CreateAsync(Loan loan)
+    public async Task<Loan>? CreateAsync(Loan loan)
     {
-        throw new NotImplementedException();
+        var newLoan = loan;
+        var book = await dbContext.Books.FindAsync(loan.BookId);
+        var user = await dbContext.Users.FindAsync(loan.UserId);
+
+        if (book is null || user is null)
+        {
+            return null;
+        }
+
+        await dbContext.AddAsync(newLoan);
+        book.SetAsUnavaliable();
+
+        await dbContext.SaveChangesAsync();
+        return newLoan;
     }
 
-    public Task<bool> ReturnLoanAsync(int loanId)
+    public async Task<bool> ReturnLoanAsync(int loanId)
     {
-        throw new NotImplementedException();
+        var loanDb = await dbContext.Loans.FindAsync(loanId);
+        if (loanDb == null)
+        {
+            return false;
+        }
+
+        var book = await dbContext.Books.FindAsync(loanDb.BookId);
+        if (book is null)
+        {
+            return false;
+        }
+
+        loanDb.ReturnLoan();
+        book.SetAsAvaliable();
+
+        await dbContext.SaveChangesAsync();
+
+        return true;
     }
 }

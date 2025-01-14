@@ -2,6 +2,7 @@
 using Library.Application.Books.Commands.DeleteBook;
 using Library.Application.Books.Queries.GetAllBooks;
 using Library.Application.Books.Queries.GetBookById;
+using Library.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,7 @@ public class BooksController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]CreateBookCommand command)
+    public async Task<ActionResult<Result<int>>> Create([FromBody]CreateBookCommand command)
     {
         var result = await mediator.Send(command);
         return Ok(result);
