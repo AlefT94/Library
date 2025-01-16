@@ -30,7 +30,6 @@ public class CreateLoanHandler(IBookRepository bookRepository, ILoanRepository l
         book.SetAsUnavaliable();
         await loanRepository.CreateAsync(loan);
 
-
         return new CreateLoanResult(true, "");
     }
 }
