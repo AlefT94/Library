@@ -1,4 +1,5 @@
 ﻿using Library.Application.Books.Commands.CreateBook;
+using Library.Application.Jobs;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Library.Application;
@@ -11,6 +12,7 @@ public static class DependencyInjection
         {
             config.RegisterServicesFromAssemblyContaining<CreateBookCommand>();
         });
+
         return services;
     }
 }

@@ -10,9 +10,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Library.API/Library.API.csproj", "Library.API/"]
-COPY ["Library.Application/Library.Application.csproj", "Library.Application/"]
-COPY ["Library.Core/Library.Core.csproj", "Library.Core/"]
-COPY ["Library.Infrastructure/Library.Infrastructure.csproj", "Library.Infrastructure/"]
 RUN dotnet restore "./Library.API/Library.API.csproj"
 COPY . .
 WORKDIR "/src/Library.API"

@@ -1,6 +1,9 @@
-﻿using Library.Core.Repositories;
+﻿using Hangfire;
+using Library.Core.Repositories;
+using Library.Core.ServicesInterfaces;
 using Library.Infrastructure.Persistence;
 using Library.Infrastructure.Persistence.Repositories;
+using Library.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +15,9 @@ public static class DependencyInjection
     {
         services
             .AddDataAccess(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddEmailService()
+            .AddHangfireService(configuration);
 
         return services;
     }
@@ -30,6 +35,25 @@ public static class DependencyInjection
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<ILoanRepository, LoanRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        return services;
+    }
+
+    private static IServiceCollection AddHangfireService(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("hangfiredb");
+        services.AddHangfire(opt =>
+        {
+            opt.UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(connectionString);
+        });
+
+        services.AddHangfireServer(x => x.SchedulePollingInterval = TimeSpan.FromSeconds(10));
+        return services;
+    }
+
+    private static IServiceCollection AddEmailService(this IServiceCollection services)
+    {
+        services.AddSingleton<IEmailService, EmailService>();
         return services;
     }
 }

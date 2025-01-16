@@ -6,4 +6,5 @@ public interface ILoanRepository
     Task<Loan?> CreateAsync(Loan loan);
     Task<bool> ReturnLoanAsync(int loanId);
     Task<Loan?> GetByIdAsync(int loandId);
+    Task<List<Loan>> GetOverdueLoansAsync();
 }
