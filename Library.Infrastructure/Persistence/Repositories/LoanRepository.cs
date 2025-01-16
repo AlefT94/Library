@@ -4,7 +4,7 @@ using Library.Core.Repositories;
 namespace Library.Infrastructure.Persistence.Repositories;
 public class LoanRepository(LibraryDbContext dbContext) : ILoanRepository
 {
-    public async Task<Loan>? CreateAsync(Loan loan)
+    public async Task<Loan?> CreateAsync(Loan loan)
     {
         var newLoan = loan;
         var book = await dbContext.Books.FindAsync(loan.BookId);
@@ -20,6 +20,12 @@ public class LoanRepository(LibraryDbContext dbContext) : ILoanRepository
 
         await dbContext.SaveChangesAsync();
         return newLoan;
+    }
+
+    public async Task<Loan?> GetByIdAsync(int loandId)
+    {
+        var loan = await dbContext.Loans.FindAsync(loandId);
+        return loan;
     }
 
     public async Task<bool> ReturnLoanAsync(int loanId)

@@ -28,6 +28,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<ILoanRepository, LoanRepository>();
         return services;
     }
 }
