@@ -64,6 +64,3 @@ The project follows a microservices-based architecture using Docker containers. 
 - Access credentials are set for development and **should not be used in production**.
 
 ---
-
-This summary serves as a basis to complete the project's README.
-
