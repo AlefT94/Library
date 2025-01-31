@@ -3,16 +3,15 @@ public class CreateBookHandler(IBookRepository repository) : IRequestHandler<Cre
 {
     public async Task<Result<int>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        Book newBook = new()
+        var newBookResult = Book.Create(request.Title, request.Author, request.Isbn, request.PublishedYear);
+
+        if (!newBookResult.IsSuccess)
         {
-            Title = request.Title,
-            Author = request.Author,
-            ISBN = request.Isbn,
-            PublishedYear = request.PublishedYear
-        };
+            return Result<int>.Failure(newBookResult.Error);
+        }
 
-        await repository.CreateAsync(newBook);
+        await repository.CreateAsync(newBookResult.Value);
 
-        return Result<int>.Success(newBook.Id);
+        return Result<int>.Success(newBookResult.Value.Id);
     }
 }
