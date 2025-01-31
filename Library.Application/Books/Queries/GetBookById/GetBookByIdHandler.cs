@@ -1,19 +1,19 @@
 ﻿using Library.Application.Books.Dtos;
 
 namespace Library.Application.Books.Queries.GetBookById;
-public class GetBookByIdHandler(IBookRepository repository) : IRequestHandler<GetBookByIdQuery, BookDto>
+public class GetBookByIdHandler(IBookRepository repository) : IRequestHandler<GetBookByIdQuery, Result<BookDto>>
 {
-    public async Task<BookDto>? Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<BookDto>> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
     {
-        var book = await repository.GetByIdAsync(request.Id);
+        Book? book = await repository.GetByIdAsync(request.Id);
         
         if(book is null)
         {
-            return null;
+            return Result<BookDto>.Failure(BooksErrors.NotFound);
         }
 
-        var result = new BookDto(book.Id, book.Title, book.Author, book.ISBN, book.PublishedYear, book.IsAvaliable);
+        var resultDto = new BookDto(book.Id, book.Title, book.Author, book.ISBN, book.PublishedYear, book.IsAvaliable);
 
-        return result;
+        return Result<BookDto>.Success(resultDto);
     }
 }

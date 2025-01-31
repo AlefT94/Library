@@ -1,11 +1,18 @@
 ﻿using Library.Application.Books.Dtos;
+using Library.Core.Common;
 
 namespace Library.Application.Books.Queries.GetAllBooks;
-public class GetAllBooksHandler(IBookRepository repository) : IRequestHandler<GetAllBooksQuery, IEnumerable<BookDto>>
+public class GetAllBooksHandler(IBookRepository repository) : IRequestHandler<GetAllBooksQuery, Result<IEnumerable<BookDto>>>
 {
-    public async Task<IEnumerable<BookDto>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<BookDto>>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
     {
         var books = await repository.GetAllAsync();
+
+        if(books == null)
+        {
+            return Result<IEnumerable<BookDto>>.Failure(BooksErrors.NotFound);
+        }
+
         var response = books.Select(b => new BookDto(
             b.Id,
             b.Title,
@@ -15,6 +22,6 @@ public class GetAllBooksHandler(IBookRepository repository) : IRequestHandler<Ge
             b.IsAvaliable
         ));
 
-        return response;
+        return Result<IEnumerable<BookDto>>.Success(response);
     }
 }
