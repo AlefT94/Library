@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Core", "Library.Cor
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{50E42820-9528-4910-95E0-04656E4B9CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Infrastructure", "Library.Infrastructure\Library.Infrastructure.csproj", "{232993CE-4132-469E-9376-09F16975A830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Infrastructure", "Library.Infrastructure\Library.Infrastructure.csproj", "{232993CE-4132-469E-9376-09F16975A830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Application", "Library.Application\Library.Application.csproj", "{62A013F5-F060-4EA9-89F9-BC4DE327A75A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Application", "Library.Application\Library.Application.csproj", "{62A013F5-F060-4EA9-89F9-BC4DE327A75A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.UnityTests", "Library.UnityTests\Library.UnityTests.csproj", "{55790824-1711-4169-9EBE-E7BA7C262088}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{62A013F5-F060-4EA9-89F9-BC4DE327A75A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62A013F5-F060-4EA9-89F9-BC4DE327A75A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62A013F5-F060-4EA9-89F9-BC4DE327A75A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55790824-1711-4169-9EBE-E7BA7C262088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55790824-1711-4169-9EBE-E7BA7C262088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55790824-1711-4169-9EBE-E7BA7C262088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55790824-1711-4169-9EBE-E7BA7C262088}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

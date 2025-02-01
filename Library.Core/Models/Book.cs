@@ -41,6 +41,21 @@ public class Book : BaseEntity
             return Result<Book>.Failure(BooksErrors.PublishedYearGreaterThanZero);
         }
 
+        if (string.IsNullOrEmpty(title))
+        {
+            return Result<Book>.Failure(BooksErrors.TitleRequired);
+        }
+
+        if (string.IsNullOrEmpty(author))
+        {
+            return Result<Book>.Failure(BooksErrors.AuthorRequired);
+        }
+
+        if (string.IsNullOrEmpty(isbn))
+        {
+            return Result<Book>.Failure(BooksErrors.IsbnRequired);
+        }
+
         return Result<Book>.Success(new Book(title, author, isbn, publishedYear));
     }
 
